@@ -10,17 +10,19 @@
 <div class="container mt-5 mb-5">
     <h1>Додавання розкладу</h1>
     <form action="/sport/add" method="post" th:object="${post}">
-        <input type="text" name="title" placeholder="Введіть назву змагань" class="form-control"><br>
         <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title error</div>
-        <input type="text" name="location" placeholder="Введіть місце проведення змагань" class="form-control"><br>
+        <input type="text" name="title" placeholder="Введіть назву змагань" class="form-control"><br>
         <div style="color:red" th:if="${#fields.hasErrors('location')}" th:errors="*{location}">Location error</div>
+        <input type="text" name="location" placeholder="Введіть місце проведення змагань" class="form-control"><br>
         <p>Введіть дату змагань</p>
-        <input type="datetime-local" name="date" class="form-control" ><br>
         <div style="color:red" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Date error</div>
-        <input type="text" name="team1" placeholder="Введіть назву першої команди" class="form-control"><br>
+        <input type="datetime-local" name="date" class="form-control" ><br>
         <div style="color:red" th:if="${#fields.hasErrors('team1')}" th:errors="*{team1}">Team 1 error</div>
-        <input type="text" name="team2" placeholder="Введіть назву другої команди" class="form-control"><br>
+        <input type="text" name="team1" placeholder="Введіть назву першої команди" class="form-control"><br>
         <div style="color:red" th:if="${#fields.hasErrors('team2')}" th:errors="*{team2}">Team 2 error</div>
+        <input type="text" name="team2" placeholder="Введіть назву другої команди" class="form-control"><br>
+        <input type="hidden" name="res1" placeholder="Введіть назву другої команди" class="form-control"><br>
+        <input type="hidden" name="res2" placeholder="Введіть назву другої команди" class="form-control"><br>
         <button type="submit" class="btn btn-success" style="background-color: black;">Додати</button>
     </form>
 </div>

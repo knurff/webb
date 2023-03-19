@@ -10,14 +10,21 @@
 <div class="container mt-5 mb-5">
     <h1>Редагування розкладу</h1>
     <div th:each="el : ${post}" >
-        <form method="post">
-            <input type="text" name="title" placeholder="Введіть назву змагань" class="form-control" required><br>
-            <input type="text" name="location" placeholder="Введіть найближчу дату змагань" class="form-control" required><br>
-            <input type="datetime-local" name="date" placeholder="Введіть дату та час змагань" class="form-control" required><br>
-            <input type="text" name="team1" placeholder="Введіть назву першої команди" class="form-control" required><br>
-            <input type="text" name="team2" placeholder="Введіть назву другої команди" class="form-control" required><br>
-            <input type="text" name="res1" placeholder="Рахунок" class="form-control" required><br>
-            <input type="text" name="res2" placeholder="Рахунок" class="form-control" required><br>
+        <form method="post" th:object="${post}">
+            <div style="color:red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title error</div>
+            <input type="text" th:value="${el.title}" name="title" placeholder="Введіть назву змагань" class="form-control"><br>
+            <div style="color:red" th:if="${#fields.hasErrors('location')}" th:errors="*{location}">Location error</div>
+            <input type="text" th:value="${el.location}" name="location" placeholder="Введіть найближчу дату змагань" class="form-control"><br>
+            <div style="color:red" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Date error</div>
+            <input type="datetime-local" th:value="${el.date}" name="date" placeholder="Введіть дату та час змагань" class="form-control"><br>
+            <div style="color:red" th:if="${#fields.hasErrors('team1')}" th:errors="*{team1}">Team1 error</div>
+            <input type="text" th:value="${el.team1}" name="team1" placeholder="Введіть назву першої команди" class="form-control"><br>
+            <div style="color:red" th:if="${#fields.hasErrors('team2')}" th:errors="*{team2}">Team1 error</div>
+            <input type="text" th:value="${el.team2}" name="team2" placeholder="Введіть назву другої команди" class="form-control"><br>
+            <div style="color:red" th:if="${#fields.hasErrors('res1')}" th:errors="*{res1}">Result error</div>
+            <input type="text" th:value="${el.res1}" name="res1" placeholder="Введіть результат першої команди" class="form-control"><br>
+            <div style="color:red" th:if="${#fields.hasErrors('res2')}" th:errors="*{res2}">Result error</div>
+            <input type="text" th:value="${el.res2}" name="res2" placeholder="Введіть результат другої команди" class="form-control"><br>
             <button type="submit" class="btn btn-success" style="background-color: black;">Оновити</button>
         </form>
     </div>

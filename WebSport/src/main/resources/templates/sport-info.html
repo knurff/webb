@@ -14,8 +14,8 @@
         <p><b>Місце проведення:</b> <span th:text="${el.location}"/></p>
         <p><b>Перша команда:</b> <span th:text="${el.team1}"/></p>
         <p><b>Друга команда:</b> <span th:text="${el.team2}"/></p>
-        <p><span th:text="${el.res1}"/></p>
-        <p><span th:text="${el.res2}"/></p>
+        <p><b>Рахунок:</b> <span th:text="${el.res1}"/></p>
+        <p><b>Рахунок:</b> <span th:text="${el.res2}"/></p>
         <a th:href="'/sport/' + ${el.id} + '/edit'" class="btn btn-warning">Редагувати</a><br><br>
         <form th:action="'/sport/' + ${el.id} + '/remove'" method="post">
             <button class="btn btn-warning" type="submit">Видалити</button>

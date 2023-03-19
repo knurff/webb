@@ -2,13 +2,13 @@ package com.sport.WebSport.controllers;
 
 import com.sport.WebSport.models.Post;
 import com.sport.WebSport.repo.PostRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.*;
 
 @Controller
@@ -31,6 +31,10 @@ public class SportController {
                                BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "sport-add";
+        if (post.getTeam1().equals(post.getTeam2())) {
+            bindingResult.rejectValue("team2", "error.post", "Назва другої команди не повинна співпадати з назвою першої команди");
+            return "sport-add";
+        }
         postRepository.save(post);
         return "sport-add";
     }
@@ -47,23 +51,23 @@ public class SportController {
     }
 
     @GetMapping("/sport/{id}/edit")
-    public String sportEdit(@PathVariable(value = "id") long id, Model model) {
-        if (!postRepository.existsById(id)) {
-            return "redirect:/sport";
-        }
-        Optional<Post> post = postRepository.findById(id);
-        ArrayList<Post> res = new ArrayList<>();
-        post.ifPresent(res::add);
-        model.addAttribute("post", res);
+    public String sportGetUpdate(Model model, @PathVariable("id") long id) {
+        Post post = postRepository.findById(id).orElseThrow();
+        model.addAttribute("post", post);
         return "sport-edit";
     }
+
     @PostMapping("/sport/{id}/edit")
     public String sportPostUpdate(@ModelAttribute("post") @Valid Post post, BindingResult bindingResult,
-                                  @PathVariable("id") long id) {
-        if(bindingResult.hasErrors())
+                                  @PathVariable("id") long id, Model model) {
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("bindingResult", bindingResult);
             return "sport-edit";
-
-        postRepository.findById(id).orElseThrow();
+        }
+        if (post.getTeam1().equals(post.getTeam2())) {
+            bindingResult.rejectValue("team2", "error.post", "Назва другої команди не повинна співпадати з назвою першої команди");
+            return "sport-edit";
+        }
         postRepository.save(post);
         return "redirect:/sport";
     }

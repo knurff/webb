@@ -1,62 +1,40 @@
 package com.sport.WebSport.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Entity
 public class Post {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
 
     @NotEmpty(message = "Введіть назву змагань")
-    @Size(min = 2, max = 20, message = "Назва повинна бути в діапазоні від 2 до 20")
     private String title;
 
     @NotEmpty(message = "Введіть місце проведення змагань")
     private String location;
-
-    @PastOrPresent(message = "Дата змагань повинна бути в майбутньому")
+    @NotNull(message = "Будь ласка, введіть дату")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime date;
 
-    @NotNull(message = "Введіть результат першої команди")
-    @Min(value = 0, message = "Результат не може бути від'ємним числом")
+    @Min(value = 0, message = "Число не може бути менше 0!")
     private Integer res1;
 
-    @NotNull(message = "Введіть результат другої команди")
-    @Min(value = 0, message = "Результат не може бути від'ємним числом")
+    @Min(value = 0, message = "Число не може бути менше 0!")
     private Integer res2;
 
-    public Integer getRes1() {
-        return res1;
-    }
-
-    public void setRes1(int res1) {
-        this.res1 = res1;
-    }
-
-    public Integer getRes2() {
-        return res2;
-    }
-
-    public void setRes2(int res2) {
-        this.res2 = res2;
-    }
-
-    @NotNull(message = "Введіть назву першої команди")
+    @NotEmpty(message = "Введіть назву першої команди")
     private String team1;
 
-    @NotNull(message = "Введіть назву другої команди")
+    @NotEmpty(message = "Введіть назву другої команди")
     private String team2;
-
     public String getTeam1() {
         return team1;
     }
@@ -73,12 +51,14 @@ public class Post {
         this.team2 = team2;
     }
 
-    public Post(String title, String location, LocalDateTime date, String team1, String team2) {
+    public Post(String title, String location, LocalDateTime date, String team1, String team2, Integer res1, Integer res2) {
         this.title = title;
         this.location = location;
         this.date = date;
         this.team1 = team1;
         this.team2 = team2;
+        this.res1 = res1;
+        this.res2 = res2;
     }
 
     public Long getId() {
@@ -113,5 +93,20 @@ public class Post {
         this.date = date;
     }
     public Post() {
+    }
+    public Integer getRes1() {
+        return res1;
+    }
+
+    public void setRes1(Integer res1) {
+        this.res1 = res1;
+    }
+
+    public Integer getRes2() {
+        return res2;
+    }
+
+    public void setRes2(Integer res2) {
+        this.res2 = res2;
     }
 }
